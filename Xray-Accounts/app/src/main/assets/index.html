@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#102b46"><title>حسابات الأشعة</title>
+<style>
+:root{--navy:#102b46;--blue:#176b87;--cyan:#31a6b8;--bg:#f2f6fa;--ink:#172b3a;--muted:#6c7e8d;--line:#e2eaf0;--white:#fff;--red:#c94b52;--green:#16845b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}
+header{background:linear-gradient(130deg,#102b46,#176b87);color:white;padding:22px 18px 25px;border-radius:0 0 25px 25px}
+.brand{display:flex;align-items:center;gap:13px}.logo{width:52px;height:52px;border:1px solid #ffffff66;border-radius:16px;display:grid;place-items:center;background:#ffffff18}
+.logo svg{width:35px;height:35px}.brand h1{font-size:21px;margin:0 0 5px}.brand p{margin:0;color:#c9e4ed;font-size:12px}
+.wrap{max-width:950px;margin:auto;padding:15px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:-3px}
+.stat{background:white;border:1px solid var(--line);border-radius:15px;padding:13px 10px;box-shadow:0 4px 14px #18334b08}.stat small{color:var(--muted);font-size:11px}.stat strong{display:block;margin-top:7px;font-size:18px;color:var(--navy)}
+.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:15px;margin-top:13px;box-shadow:0 4px 16px #18334b08}
+.panelhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.panelhead h2{font-size:16px;margin:0}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+label{display:block;font-size:12px;color:#53697a;margin-bottom:5px}
+input,select,textarea{width:100%;border:1px solid #d9e3eb;background:#fbfdff;border-radius:10px;padding:11px;font:14px Tahoma;color:var(--ink);outline:none;min-width:0}
+input:focus,select:focus,textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #31a6b81c}
+.field{min-width:0}.wide{grid-column:1/-1}
+button{border:0;border-radius:11px;padding:11px 14px;font: bold 13px Tahoma;cursor:pointer}
+.primary{background:var(--blue);color:white}.soft{background:#eaf4f7;color:#155b72}.danger{background:#fff0f0;color:var(--red)}.dark{background:var(--navy);color:white}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar button{flex:1}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:13px}th{background:#eef5f8;color:#31566a;font-weight:bold}th,td{padding:11px 9px;text-align:right;border-bottom:1px solid var(--line)}tr:last-child td{border-bottom:0}.empty{text-align:center;color:var(--muted);padding:24px}
+.rowbtn{padding:7px 9px;margin-left:3px;font-size:11px}.edit{background:#eaf4f7;color:#155b72}.del{background:#fff0f0;color:#b43b44}
+.note{font-size:11px;color:var(--muted);line-height:1.7}.credit{text-align:center;color:#758897;font-size:11px;padding:18px}
+.monthtitle{font-weight:bold;color:var(--navy)}
+@media(max-width:520px){.stats{gap:6px}.stat{padding:11px 8px}.stat strong{font-size:15px}.controls{grid-template-columns:1fr 1fr}.panel{padding:12px}.brand h1{font-size:19px}}
+@media print{body{background:white}.no-print,header .brand p,.actions,.rowbtn{display:none!important}.wrap{max-width:none;padding:0}.panel,.stat{box-shadow:none;break-inside:avoid}.tablewrap{overflow:visible}table{min-width:0;font-size:10px}th,td{padding:6px}.stats{margin:10px 0}header{background:white;color:#102b46;padding:10px;border-radius:0}.logo{border-color:#aaa}.logo svg{stroke:#102b46}}
+</style></head>
+<body>
+<header><div class="brand"><div class="logo"><svg viewBox="0 0 48 48" fill="none" stroke="#d9f7ff" stroke-width="2.5" stroke-linecap="round"><path d="M24 5v38M5 24h38M11 11l26 26M37 11 11 37"/><circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="5" fill="#31a6b8" stroke="none"/></svg></div><div><h1>حسابات الأشعة</h1><p>إدارة الحسابات اليومية والتقارير الشهرية</p></div></div></header>
+<div class="wrap">
+<section class="stats">
+ <div class="stat"><small>إجمالي الشهر</small><strong id="total">0.00 ج.م</strong></div>
+ <div class="stat"><small>إجمالي المسحوبات</small><strong id="withdrawals">0.00 ج.م</strong></div>
+ <div class="stat"><small>المتبقي</small><strong id="remaining">0.00 ج.م</strong></div>
+</section>
+<section class="panel no-print">
+ <div class="panelhead"><h2>📅 اختيار الشهر والتصفية</h2></div>
+ <div class="controls">
+  <div class="field"><label>الشهر</label><input type="month" id="month"></div>
+  <div class="field"><label>تصفية حسب المكان</label><select id="filter"><option value="">كل الأماكن</option></select></div>
+ </div>
+ <p class="note">كل شهر محفوظ بشكل مستقل. اختر شهرًا قديمًا لمراجعة عملياته أو تعديله.</p>
+</section>
+<section class="panel no-print">
+ <div class="panelhead"><h2 id="formTitle">➕ إضافة عملية جديدة</h2></div>
+ <form id="entryForm" class="controls">
+  <input type="hidden" id="editId">
+  <div class="field"><label>التاريخ</label><input type="date" id="date" required></div>
+  <div class="field"><label>الفحص</label><input id="exam" value="x-ray" required></div>
+  <div class="field"><label>المكان</label><select id="place" required></select></div>
+  <div class="field"><label>الإجمالي (جنيه)</label><input type="number" id="amount" min="0" step=".01" placeholder="0.00" required></div>
+  <div class="field wide"><label>الملاحظات / الحساب</label><select id="note"><option value="">بدون ملاحظة</option></select></div>
+  <div class="actions wide"><button class="primary" type="submit" id="saveBtn">حفظ العملية</button><button class="soft" type="button" id="cancelEdit" hidden>إلغاء التعديل</button></div>
+ </form>
+</section>
+<section class="panel no-print">
+ <div class="panelhead"><h2>💰 المسحوبات الشهرية</h2></div>
+ <div class="controls">
+  <div class="field"><label>مسحوبات محمد</label><input type="number" id="mohamed" min="0" step=".01" value="0"></div>
+  <div class="field"><label>مسحوبات محمود</label><input type="number" id="mahmoud" min="0" step=".01" value="0"></div>
+ </div>
+ <p class="note">يتم حفظ المسحوبات تلقائيًا لكل شهر.</p>
+</section>
+<section class="panel">
+ <div class="panelhead"><h2>📋 سجل العمليات</h2><span class="monthtitle" id="monthLabel"></span></div>
+ <div class="tablewrap"><table><thead><tr><th>م</th><th>التاريخ</th><th>اليوم</th><th>الفحص</th><th>المكان</th><th>الإجمالي</th><th>الملاحظات</th><th class="no-print">إجراءات</th></tr></thead><tbody id="rows"></tbody></table></div>
+ <div class="toolbar no-print" style="margin-top:12px"><button class="dark" id="pdf">تصدير PDF / طباعة</button><button class="soft" id="backup">نسخة احتياطية</button><button class="soft" id="restore">استيراد نسخة</button><input type="file" id="restoreFile" accept="application/json" hidden></div>
+</section>
+<div class="credit">تصميم وتطوير محمود سليمان · X-RAY Accounts</div>
+</div>
+<script>
+const PLACES=['دار الثقة','الجلاتمة','الرهاوي','حضانة نكلا','حضانة كفر حكيم','حضانات','منزلي'];
+const NOTES=['الحساب مع محمد','الحساب مع محمود','الحساب مع حماده'];
+const $=id=>document.getElementById(id);
+const storeKey='xray_accounts_v1';
+let db=JSON.parse(localStorage.getItem(storeKey)||'{}');
+const today=new Date(), pad=n=>String(n).padStart(2,'0');
+$('month').value=`${today.getFullYear()}-${pad(today.getMonth()+1)}`;
+$('date').value=`${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+PLACES.forEach(v=>{$('place').add(new Option(v,v));$('filter').add(new Option(v,v))});
+NOTES.forEach(v=>$('note').add(new Option(v,v)));
+const month=()=> $('month').value;
+function bucket(m=month()){if(!db[m])db[m]={entries:[],mohamed:0,mahmoud:0};return db[m]}
+function save(){localStorage.setItem(storeKey,JSON.stringify(db))}
+function money(n){return (Number(n)||0).toLocaleString('ar-EG',{minimumFractionDigits:2,maximumFractionDigits:2})+' ج.م'}
+function day(d){return new Date(d+'T12:00:00').toLocaleDateString('ar-EG',{weekday:'long'})}
+function render(){
+ let b=bucket(), list=b.entries.filter(x=>!$('filter').value||x.place===$('filter').value);
+ let sum=b.entries.reduce((s,x)=>s+Number(x.amount||0),0), w=Number(b.mohamed)+Number(b.mahmoud);
+ $('total').textContent=money(sum);$('withdrawals').textContent=money(w);$('remaining').textContent=money(sum-w);
+ $('mohamed').value=b.mohamed||0;$('mahmoud').value=b.mahmoud||0;
+ $('monthLabel').textContent=month();$('rows').innerHTML='';
+ if(!list.length){$('rows').innerHTML='<tr><td colspan="8" class="empty">لا توجد عمليات في هذا الشهر / التصفية</td></tr>'}
+ list.sort((a,b)=>a.date.localeCompare(b.date)).forEach((x,i)=>{
+  let tr=document.createElement('tr');
+  [i+1,x.date,day(x.date),x.exam,x.place,money(x.amount),x.note||'—'].forEach(v=>{let td=document.createElement('td');td.textContent=v;tr.append(td)});
+  let td=document.createElement('td');td.className='no-print';
+  let e=document.createElement('button');e.className='rowbtn edit';e.textContent='تعديل';e.onclick=()=>edit(x.id);
+  let d=document.createElement('button');d.className='rowbtn del';d.textContent='حذف';d.onclick=()=>removeEntry(x.id);
+  td.append(e,d);tr.append(td);$('rows').append(tr);
+ });
+ $('formTitle').textContent=$('editId').value?'✏️ تعديل العملية':'➕ إضافة عملية جديدة';
+}
+$('entryForm').onsubmit=e=>{e.preventDefault();let b=bucket(),id=$('editId').value;
+ let item={id:id||String(Date.now()),date:$('date').value,exam:$('exam').value.trim(),place:$('place').value,amount:Number($('amount').value),note:$('note').value};
+ if(id)b.entries=b.entries.map(x=>x.id===id?item:x);else b.entries.push(item);
+ save();resetForm();render();
+};
+function edit(id){let x=bucket().entries.find(x=>x.id===id);if(!x)return;
+ $('editId').value=x.id;$('date').value=x.date;$('exam').value=x.exam;$('place').value=x.place;$('amount').value=x.amount;$('note').value=x.note||'';
+ $('cancelEdit').hidden=false;$('saveBtn').textContent='حفظ التعديلات';$('formTitle').textContent='✏️ تعديل العملية';window.scrollTo({top:250,behavior:'smooth'});
+}
+function removeEntry(id){if(!confirm('هل تريد حذف هذه العملية؟'))return;let b=bucket();b.entries=b.entries.filter(x=>x.id!==id);save();render()}
+function resetForm(){$('entryForm').reset();$('editId').value='';$('exam').value='x-ray';$('date').value=month()+'-01';$('cancelEdit').hidden=true;$('saveBtn').textContent='حفظ العملية';}
+$('cancelEdit').onclick=()=>{resetForm();render()};
+$('month').onchange=()=>{bucket();resetForm();render()};
+$('filter').onchange=render;
+['mohamed','mahmoud'].forEach(id=>$(id).onchange=()=>{bucket()[id]=Number($(id).value)||0;save();render()});
+$('pdf').onclick=()=>{if(window.AndroidBridge&&AndroidBridge.printPdf){AndroidBridge.printPdf()}else{window.print()}};
+$('backup').onclick=()=>{if(window.AndroidBridge&&AndroidBridge.exportBackup){AndroidBridge.exportBackup(JSON.stringify(db));return}let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='نسخة-احتياطية-حسابات-الأشعة.json';a.click();URL.revokeObjectURL(a.href)};
+$('restore').onclick=()=>{if(window.AndroidBridge&&AndroidBridge.importBackup){AndroidBridge.importBackup()}else{$('restoreFile').click()}};
+$('restoreFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let data=JSON.parse(await f.text());if(!data||typeof data!=='object')throw 0;if(confirm('سيتم استبدال البيانات الحالية بالنسخة المختارة. هل توافق؟')){db=data;save();render();alert('تم استيراد النسخة بنجاح')}}catch(_){alert('ملف النسخة الاحتياطية غير صالح')}e.target.value=''};
+window.importBackupFromAndroid=(raw)=>{try{let data=JSON.parse(raw);if(!data||typeof data!=='object')throw 0;if(confirm('سيتم استبدال البيانات الحالية بالنسخة المختارة. هل توافق؟')){db=data;save();render();alert('تم استيراد النسخة بنجاح')}}catch(e){alert('ملف النسخة الاحتياطية غير صالح')}};
+bucket();render();
+</script></body></html>
